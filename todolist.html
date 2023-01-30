@@ -55,7 +55,7 @@
         fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
             .then(response => response.json())
             .then(data => listTask = data)
-            .then(data => console.log(listTask));   // Afficher les données récupérées sur la console.
+            .then(data => addpage(data));   // Afficher les données récupérées sur la console.
 
 
         // Sélectionner la liste pour ajouter des événements d'écoute.
@@ -103,15 +103,34 @@
 
             taskList.appendChild(task);
             input.value = "";               // Réinitialisation de la valeur de l'input
-        });
+        })
 
+            async function addpage(data) {
+                console.log(data);
+                for await (let item of listTask) {
+                    const task = document.createElement("li");
+                    task.classList.add("todo", "list-group-item", "d-flex", "align-items-center");
 
+                    const checkbox = document.createElement("input");
+                    checkbox.classList.add("form-check-input");
+                    checkbox.type = "checkbox";
+                    checkbox.id = `todo-${Date.now()}`;
+                    task.appendChild(checkbox);
 
-        listTask.forEach(function(item) {
-            console.log(item);
-        });
+                    const label = document.createElement("label");
+                    label.classList.add("ms-2", "form-check-label");
+                    label.htmlFor = checkbox.id;
+                    label.textContent = input.value; // a remplacer par le titre de l'item de l'objet
+                    task.appendChild(label);
 
-        
+                    const deleteBtn = document.createElement("label");
+                    deleteBtn.classList.add("ms-auto", "btn", "btn-danger", "btn-sm");
+                    deleteBtn.innerHTML = '<i class="bi-trash"></i>';
+                    task.appendChild(deleteBtn);
+
+                    taskList.appendChild(task);
+                }
+            }
     </script>
 
 </body>
