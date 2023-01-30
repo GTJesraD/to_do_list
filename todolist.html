@@ -120,7 +120,7 @@
                     const label = document.createElement("label");
                     label.classList.add("ms-2", "form-check-label");
                     label.htmlFor = checkbox.id;
-                    label.textContent = input.value; // a remplacer par le titre de l'item de l'objet
+                    label.textContent = item.title;
                     task.appendChild(label);
 
                     const deleteBtn = document.createElement("label");
